@@ -1,1 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VinaREN Research Data Management Platform - Advanced Cloud and Big Data Technologies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary: #423D9B;
+            --secondary: #6251B5;
+            --secondary-dark: #2D1B47;
+            --orange: #F28C28;
+            --magenta: #E81C64;
+            --dark-teal: #0E4C68;
+            --body: #F2F2F2;
+            --text: #1D1D1B;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--body);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255,255,255,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .project-info {
+            text-align: center;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--secondary-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--orange), var(--magenta), var(--primary));
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--orange);
+            border-radius: 2px;
+        }
+
+        /* Overview Cards */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .overview-card {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .overview-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+        }
+
+        .overview-card:hover::before {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-description {
+            position: relative;
+            z-index: 2;
+            opacity: 0.9;
+        }
+
+        /* Platform Highlight */
+        .platform-highlight {
+            background: linear-gradient(135deg, var(--dark-teal), var(--primary));
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotate(0deg) translate(0, 0); }
+            50% { transform: rotate(180deg) translate(20px, 20px); }
+        }
+
+        .platform-url {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border: 2px dashed rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .platform-description {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--orange);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .feature-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-item:nth-child(even) {
+            border-left-color: var(--magenta);
+        }
+
+        .feature-item:nth-child(3n) {
+            border-left-color: var(--primary);
+        }
+
+        .feature-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Technology Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tech-item {
+            background: linear-gradient(135deg, var(--orange), var(--magenta));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: scale(1.05);
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Data Statistics */
+        .data-stats {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Partners */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .partner-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partner-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-3px);
+        }
+
+        .partner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(242, 140, 40, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .partner-card:hover::before {
+            left: 100%;
+        }
+
+        .partner-type {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .government { background: var(--orange); }
+        .research { background: var(--magenta); }
+        .industry { background: var(--dark-teal); }
+
+        /* Challenges */
+        .challenges-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .challenge-item {
+            background: linear-gradient(135deg, #fff3f3, #ffe8e8);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--magenta);
+            position: relative;
+        }
+
+        .challenge-title {
+            color: var(--magenta);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .budget-highlight {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            border-left-color: var(--orange);
+        }
+
+        .budget-highlight .challenge-title {
+            color: var(--orange);
+        }
+
+        /* Future Directions */
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .future-item {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 2rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--dark-teal);
+            transition: transform 0.3s ease;
+        }
+
+        .future-item:hover {
+            transform: scale(1.02);
+        }
+
+        .future-title {
+            color: var(--dark-teal);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* AI Forum Highlight */
+        .forum-highlight {
+            background: linear-gradient(135deg, var(--magenta), var(--orange));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        /* SDGs */
+        .sdg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .sdg-item {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .sdg-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--orange);
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section {
+                padding: 2rem 1rem;
+            }
+            
+            .logos {
+                gap: 1.5rem;
+            }
+            
+            .logo {
+                height: 45px;
+            }
+            
+            .nav-container {
+                gap: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .platform-url {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="container">
+            <div class="header-content">
+                <div class="logos">
+                    <img src="images/logos/tein-logo.png" alt="TEIN*CC" class="logo">
+                    <img src="images/logos/asia-connect-logo.png" alt="Asia@Connect" class="logo">
+                    <img src="images/logos/eu-logo.png" alt="European Union" class="logo">
+                </div>
+                <h1>VinaREN Platform</h1>
+                <p class="subtitle">Research Data Management Platform Based on Advanced Cloud and Big Data Technologies</p>
+                <p class="project-info">6 Targeted Call • WP2 • Vietnam Initiative</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#overview" class="nav-item active">Overview</a>
+                <a href="#objectives" class="nav-item">Objectives</a>
+                <a href="#activities" class="nav-item">Activities</a>
+                <a href="#outcomes" class="nav-item">Outcomes</a>
+                <a href="#partners" class="nav-item">Partners</a>
+                <a href="#challenges" class="nav-item">Challenges</a>
+                <a href="#future" class="nav-item">Future</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section id="overview" class="section">
+                <h2 class="section-title">Project Overview</h2>
+                <p>This transformative project established a national-scale research data platform in Vietnam, addressing the critical absence of structured infrastructure for sharing and managing scientific data. The cloud-based system enables VinaREN institutions to store, access, and reuse research datasets, supporting Vietnam's digital transformation agenda and promoting open science principles across the country's research ecosystem.</p>
+                
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <div class="card-icon">☁️</div>
+                        <h3 class="card-title">Cloud Infrastructure</h3>
+                        <p class="card-description">Advanced cloud-based platform supporting real-time and batch data processing</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">📊</div>
+                        <h3 class="card-title">Big Data Analytics</h3>
+                        <p class="card-description">Comprehensive data management and analytics capabilities for research institutions</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">🔬</div>
+                        <h3 class="card-title">Open Science</h3>
+                        <p class="card-description">Promoting data sharing and collaborative research across Vietnamese institutions</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">🏛️</div>
+                        <h3 class="card-title">National Platform</h3>
+                        <p class="card-description">Centralized infrastructure serving VinaREN member institutions nationwide</p>
+                    </div>
+                </div>
+
+                <div class="platform-highlight">
+                    <h3>Official Platform Launch</h3>
+                    <div class="platform-url">https://openscience.vn</div>
+                    <p class="platform-description">Vietnam's premier research data management platform supporting collaborative digital ecosystem for data-intensive research</p>
+                </div>
+            </section>
+
+            <section id="objectives" class="section">
+                <h2 class="section-title">Project Objectives</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3 class="feature-title">Primary Goal</h3>
+                        <p>Build a cloud-enabled platform to support the sharing and management of research data among Vietnamese scientific communities, facilitating collaboration and promoting data-driven research and innovation.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">National Data Assessment</h3>
+                        <p>Assess current national research data practices, storage methods, and institutional readiness across Vietnam's research landscape.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Open Platform Architecture</h3>
+                        <p>Propose and implement an open platform architecture based on international best practices and cloud technologies.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Software Development</h3>
+                        <p>Build comprehensive software solutions for managing, accessing, and analyzing research data with advanced security features.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Data Sharing Facilitation</h3>
+                        <p>Facilitate data sharing through integration capabilities and regulatory framework development for ethical usage.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Platform Promotion</h3>
+                        <p>Promote platform adoption and usage across scientific institutions throughout Vietnam's research community.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="activities" class="section">
+                <h2 class="section-title">Key Activities</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3 class="feature-title">Current Data Practices Assessment</h3>
+                        <p>Conducted comprehensive surveys and legal reviews to evaluate data storage, sharing policies, and institutional readiness across Vietnam's research institutions.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Architecture Design</h3>
+                        <p>Studied global architectures including AWS, Lambda, and OpenStack to develop a modular platform supporting streaming and batch data for analytics and storage.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Platform Development</h3>
+                        <p>Built comprehensive user/data management, security, and ingestion modules using open-source tools, hosted at https://openscience.vn.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Data Integration Initiative</h3>
+                        <p>Mobilized researchers to voluntarily upload nearly 3,000 datasets to demonstrate platform capabilities and build initial content repository.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Code of Conduct Development</h3>
+                        <p>Created preliminary user regulations to guide ethical sharing and platform participation, currently undergoing stakeholder review process.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">AI4VN Forum Dissemination</h3>
+                        <p>Introduced platform at AI4VN Forum in September 2023, targeting national research institutions and AI stakeholders for maximum impact.</p>
+                    </div>
+                </div>
+
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <div class="tech-icon">☁️</div>
+                        <h4>Cloud Computing</h4>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📊</div>
+                        <h4>Big Data Analytics</h4>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔒</div>
+                        <h4>Security Modules</h4>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔄</div>
+                        <h4>Data Streaming</h4>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">💾</div>
+                        <h4>Batch Processing</h4>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🌐</div>
+                        <h4>Open Source</h4>
+                    </div>
+                </div>
+            </section>
+
+            <section id="outcomes" class="section">
+                <h2 class="section-title">Key Outcomes & Impact</h2>
+                
+                <div class="data-stats">
+                    <h3>Platform Performance Metrics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">3,000+</div>
+                            <div class="stat-label">Datasets Shared</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">AI4VN Participants</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">National Platform</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3 class="feature-title">Functional Online Platform</h3>
+                        <p>Successfully developed and deployed an accessible platform supporting real-time and batch processing for research datasets with comprehensive security features.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Architecture Report Published</h3>
+                        <p>Comprehensive documentation outlining system design and integration strategies based on international best practices and cloud technologies.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">3,000+ Datasets Repository</h3>
+                        <p>NASATI researchers voluntarily contributed extensive datasets to initiate platform content and demonstrate practical usability for the research community.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Platform Regulation Framework</h3>
+                        <p>Prepared comprehensive user code of conduct to promote ethical and standardized data usage and sharing across institutional boundaries.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Digital Ecosystem Foundation</h3>
+                        <p>Established the foundation for a collaborative digital ecosystem supporting data-intensive research across Vietnam's scientific community.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Open Science Advancement</h3>
+                        <p>Significantly advanced Vietnam's open science initiatives and digital transformation agenda in the research and academic sectors.</p>
+                    </div>
+                </div>
+
+                <div class="forum-highlight">
+                    <h3>AI4VN Forum Launch</h3>
+                    <p>Platform successfully launched at AI4VN Forum in September 2023 with participation from over 100 stakeholders in Vietnam's AI and research community, establishing strong foundation for national adoption.</p>
+                </div>
+            </section>
+
+            <section id="partners" class="section">
+                <h2 class="section-title">Partner Organizations</h2>
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-type government">Government Agency</div>
+                        <h3>National Agency for Science and Technology Information (NASATI)</h3>
+                        <p>Primary government partner providing policy framework and institutional coordination for national research data initiatives</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type research">Research Institute</div>
+                        <h3>Information Technology Institute, Vietnam Academy of Science and Technology</h3>
+                        <p>Leading research institution providing technical expertise and academic coordination for platform development</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type industry">Big Data Institute</div>
+                        <h3>VinBigdata Institute</h3>
+                        <p>Advanced analytics and big data expertise provider contributing to platform architecture and data processing capabilities</p>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-type industry">Technology Corporation</div>
+                        <h3>FPT Corporation</h3>
+                        <p>Leading technology corporation providing cloud infrastructure, hosting services, and future platform scaling support</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="challenges" class="section">
+                <h2 class="section-title">Challenges & Gaps</h2>
+                <div class="challenges-list">
+                    <div class="challenge-item budget-highlight">
+                        <h3 class="challenge-title">Significant Budget Reduction</h3>
+                        <p>Original budget of EUR 50,000 was reduced to EUR 20,000, substantially limiting planned activities and implementation scale, affecting project scope and deliverables.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3 class="challenge-title">Lack of Formal Data Collection</h3>
+                        <p>Financial constraints significantly hindered the ability to contract institutions for systematic dataset contribution, relying instead on voluntary contributions from researchers.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3 class="challenge-title">Workshop Cancellation</h3>
+                        <p>Planned public launch workshop could not be held due to funding limitations; AI4VN Forum substituted as the primary dissemination channel for platform introduction.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="future" class="section">
+                <h2 class="section-title">Future Directions</h2>
+                <div class="future-grid">
+                    <div class="future-item">
+                        <h3 class="future-title">FPT Corporation Partnership</h3>
+                        <p>FPT Corporation will provide comprehensive support for future platform hosting and modeling capabilities, enabling significant scale and simulation enhancements.</p>
+                    </div>
+                    <div class="future-item">
+                        <h3 class="future-title">BI and ML Tools Integration</h3>
+                        <p>Future development plans include enhancing the platform with advanced analytics, machine learning capabilities, and interactive dashboard tools for researchers.</p>
+                    </div>
+                    <div class="future-item">
+                        <h3 class="future-title">Regulatory Advocacy</h3>
+                        <p>Push for national regulations mandating open access to research data funded by the government, establishing policy framework for data sharing.</p>
+                    </div>
+                    <div class="future-item">
+                        <h3 class="future-title">Nationwide Awareness Campaigns</h3>
+                        <p>Continue comprehensive platform promotion and user training through workshops, media outreach, and institutional engagement across Vietnam.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Relevant SDGs</h2>
+                <div class="sdg-grid">
+                    <div class="sdg-item">SDG 4: Quality Education</div>
+                    <div class="sdg-item">SDG 9: Industry, Innovation and Infrastructure</div>
+                    <div class="sdg-item">SDG 17: Partnerships for the Goals</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Project Information</h3>
+                    <p>VinaREN Research Data Platform</p>
+                    <p>6 Targeted Call • WP2</p>
+                    <p>Advanced Cloud & Big Data Technologies</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Key Partners</h3>
+                    <p>NASATI - Government Agency</p>
+                    <p>IT Institute, VAST - Research</p>
+                    <p>VinBigdata - Big Data Analytics</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Platform Details</h3>
+                    <p>Website: https://openscience.vn</p>
+                    <p>3,000+ Datasets Available</p>
+                    <p>Cloud-Based Infrastructure</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Future Support</h3>
+                    <p>FPT Corporation Partnership</p>
+                    <p>ML & BI Tools Integration</p>
+                    <p>National Regulation Advocacy</p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; margin-top: 2rem;">
+                <p>&copy; 2024 VinaREN Platform Project. Advancing Vietnam's Open Science Initiative.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Update active nav item on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-item, .partner-card, .challenge-item, .future-item, .tech-item, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Animate statistics
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const text = stat.textContent;
+                let target = parseInt(text.replace(/[^0-9]/g, ''));
+                
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        if (text.includes('+')) {
+                            stat.textContent = Math.floor(current) + '+';
+                        } else {
+                            stat.textContent = Math.floor(current);
+                        }
+                    }
+                }, 30);
+            });
+        }
+
+        // Trigger stats animation when stats section is visible
+        const statsSection = document.querySelector('.stats-grid');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Tech items staggered animation
+        document.querySelectorAll('.tech-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Platform highlight floating animation
+        const platformHighlight = document.querySelector('.platform-highlight');
+        if (platformHighlight) {
+            setInterval(() => {
+                platformHighlight.style.transform = `translateY(${Math.sin(Date.now() * 0.001) * 5}px)`;
+            }, 50);
+        }
+    </script>
+</body>
+</html>
